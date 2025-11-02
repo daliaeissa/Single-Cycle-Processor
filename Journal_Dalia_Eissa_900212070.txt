@@ -1,0 +1,4 @@
+October 28, 2:00PM: adding the other instructions, added R-type and B-type instructions.
+October 29, 10:38AM: integrated the branch control unit in the single cycle processor.
+November 2, 3:09PM: finished the LUI instruction and only the AUIPC, JAL/JALR, and halting instructions left and testing.
+November 2, 10:04PM: finished the halting instructions and AUIPC an JAL/JALR are the only instructions undone.
