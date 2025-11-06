@@ -57,8 +57,8 @@ module n_bit_ALU #(parameter N = 32) // with zero flag
             //     result = A + {B[19:0], 12'b0};
             // 4'b1100: // JAL/JALR
             //     result = A + 32'd4;
-            4'b1111: // Halt
-                result = ;  
+//            4'b1111: // Halt
+//                result = ;  
         endcase
     end
 

@@ -13,6 +13,8 @@
 *                 11/02/25 – Integrated 5x1 MemtoReg mux to support more data sources to write back to the register file, but need to adjust the control signal MemtoReg to fit the selection line.
 *                          – Modified PC mux to be a 4x1 mux to support halting of instructions.   
 *                          – Instructions left to modify are AUIPC (check the shifting where it will be done), JAL/JALR (check ALU control unit and ALU for the addition of PC + 4 to be written back to the register file).
+*                 11/03/25 – Fixed AUIPC immediate generation to account for the shift left operation, and checked JAL/JALR writeback to register file.
+*                          – Single Cycle Processor is now complete and just needs to be tested thoroughly.
 *                 
 **********************************************************************/ 
 
@@ -42,7 +44,7 @@ wire [31:0] RF_write_data;
 // Control unit wires
 wire Branch;
 wire MemRead;
-wire MemtoReg;
+wire [2:0] MemtoReg;
 wire [1:0] ALUOp;
 wire MemWrite;
 wire ALUSrc;
@@ -98,7 +100,7 @@ n_bit_register #(32) pc (
 );
 
 InstMem inst_mem (
-    .addr(pc_current[7:2]),
+    .addr(pc_current[11:0]),
     .data_out(instruction)
 );
 
@@ -192,8 +194,9 @@ Data_Mem data_mem (
     .clk(clk),
     .MemRead(MemRead),
     .MemWrite(MemWrite),
-    .addr(alu_result[7:2]),
+    .addr(alu_result[11:0]),
     .data_in(read_data_2),
+    .byte_select(byte_select),
     .data_out(read_data_mem)
 );
 

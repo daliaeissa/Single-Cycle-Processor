@@ -27,8 +27,8 @@ always @(*) begin
         3'b000: out = a; 
         3'b001: out = b; 
         3'b010: out = c; 
-        3'b011: out = d;
-        3'b100: out = e;
+        3'b011: out = d;        // AUIPC 
+        3'b100: out = e;        // PC + 4 for JAL/JALR
     endcase
 end
 

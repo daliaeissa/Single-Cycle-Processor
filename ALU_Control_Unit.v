@@ -25,7 +25,7 @@ module ALU_Control_Unit
 
 always @(*) begin
     case (ALUOp)
-        2'b00:      // Load or Store
+        2'b00: begin     // Load or Store
             ALU_selection = 4'b0010;    // ADD
             case (instruction[14:12])
                 3'b000: byte_select = 3'b000;   // LB or SB
@@ -34,9 +34,11 @@ always @(*) begin
                 3'b100: byte_select = 3'b100;   // LBU
                 3'b101: byte_select = 3'b101;   // LHU
             endcase
-        2'b01:      // Branch
+        end
+        2'b01: begin     // Branch
             ALU_selection = 4'b0110;    // SUB
-        2'b10:      // R-type or I-type 
+        end
+        2'b10: begin     // R-type or I-type 
             case (instruction[6:0])
                 7'b0010011: begin   // I-type : ADDI, SLTI, SLTIU, XORI, ORI, ANDI, SLLI, SRLI, SRAI
                     case (instruction[14:12])
@@ -108,6 +110,7 @@ always @(*) begin
                     endcase
                 end
             endcase
+        end
         2'b11: begin    
             case (instruction[6:2])
                 5'b01101:    // LUI
@@ -120,7 +123,7 @@ always @(*) begin
                     ALU_selection = 4'b0010;
                 5'b00011:    // FENCE, FENCE.TSO, PAUSE
                     ALU_selection = 4'b1111;   // Halt 
-                5'11100:    // ECALL, EBREAK
+                5'b11100:    // ECALL, EBREAK
                     ALU_selection = 4'b1111;   // Halt
             endcase
         end
