@@ -1,29 +1,3 @@
-/******************************************************************* 
-* 
-* Module: InstMem.v 
-* Project: Single Cycle Processor
-* Author: Dalia Eissa, daliaeissa@aucegypt.edu
-          Omar Zainelabdeen, omarzee@aucegypt.edu
-          Nour Waleed, nourwaleedmo.k@aucegypt.edu
-* Description: Instruction Memory
-* 
-* Change history: 10/21/25 - Took the file from previous labs to integrate it in the Single Cycle Processor
-*                 11/03/25 - Modified to a 4KB memory to accommodate larger programs.
-*                 11/04/25 - Initialized memory with a sample instructions for ADDI testing. [ADDI tests successful]
-*                 
-**********************************************************************/ 
-
-module InstMem 
-(
-    input [11:0] addr, 
-    output [31:0] data_out
-);
-  
-    reg[7:0] mem[(4*1024-1):0]; // 4KB memory
-    assign data_out = {mem[addr+3], mem[addr+2], mem[addr+1], mem[addr+0]};
-
-    initial begin
-           
 //// --- ADDI setup ---
 //mem[0]=8'h93; mem[1]=8'h00; mem[2]=8'h00; mem[3]=8'h0f; // addi x1,  x0, 240
 //mem[4]=8'h13; mem[5]=8'h01; mem[6]=8'h50; mem[7]=8'h0a; // addi x2,  x0, 165
@@ -81,49 +55,3 @@ module InstMem
 //mem[196]=8'h13; mem[197]=8'hdd; mem[198]=8'h48; mem[199]=8'h00;// srai x26, x17, 4
 //mem[240]=8'h03; mem[241]=8'h4e; mem[242]=8'h10; mem[243]=8'h13; // lbu x28, 305(x0)
 //mem[244]=8'h83; mem[245]=8'h5e; mem[246]=8'h60; mem[247]=8'h13; // lhu x29, 310(x0)
-
-//// R-Format
-//mem[200]=8'hb3; mem[201]=8'h86; mem[202]=8'hc5; mem[203]=8'h00; // add x13, x11, x12
-//mem[204]=8'h33; mem[205]=8'h08; mem[206]=8'hf7; mem[207]=8'h40; // sub x16, x14, x15
-//mem[208] =8'hb3; mem[209] =8'h99; mem[210]=8'h28; mem[211]=8'h01; // sll x19, x17, x18
-//mem[212] =8'h33; mem[213] =8'h2B; mem[214]=8'h5A; mem[215]=8'h01; // slt x22, x20, x21
-//mem[216] =8'hb3; mem[217] =8'hbc; mem[218]=8'h8b; mem[219]=8'h01; // sltu x25, x23, x24
-//mem[220] =8'h33; mem[221] =8'h4e; mem[222]=8'hbd; mem[223]=8'h01; // xor x28, x26, x27
-//mem[224] =8'hb3; mem[225] =8'hdf; mem[226]=8'hee; mem[227]=8'h01; // srl x31, x29, x30
-//mem[228] =8'h33; mem[229] =8'hd4; mem[230]=8'ha4; mem[231]=8'h40; // sra x8, x9, x10
-//mem[232] =8'h33; mem[233] =8'h63; mem[234]=8'h52; mem[235]=8'h00; // or x6, x4, x5
-//mem[236] =8'hb3; mem[237] =8'hf1; mem[238]=8'h20; mem[239]=8'h00; // and x3, x1, x2
-
-
-//// U-Format
-//mem[248]=8'h37; mem[249]=8'h99; mem[250]=8'h03; mem[251]=8'h03; // lui x18, 12345
-//mem[252]=8'h97; mem[253]=8'he9; mem[254]=8'h6c; mem[255]=8'h05; // auipc x19, 22222
-
-// B-Format 
-mem[0]=8'h93; mem[1]=8'h00; mem[2]=8'h50; mem[3]=8'h00; //  addi x1, x0, 5
-mem[4]=8'h13; mem[5]=8'h01; mem[6]=8'h50; mem[7]=8'h00; // addi x2, x0, 5
-mem[8]=8'h13; mem[9]=8'h01; mem[10]=8'h50; mem[11]=8'h00; // addi x2, x0, 5   
-//mem[12]=8'h0f; mem[13]=8'h81; mem[14]=8'h51; mem[15]=8'h00; // fence x2, x3, 5  
-//mem[12]=8'h0f; mem[13]=8'h00; mem[14]=8'h30; mem[15]=8'h83; // fence.tso
-mem[12]=8'h0f; mem[13]=8'h00; mem[14]=8'h00; mem[15]=8'h01; // pause 
-//mem[12]=8'h73; mem[13]=8'h81; mem[14]=8'h01; mem[15]=8'h00; // ecall x2, x3, 5 
-//mem[12]=8'h73; mem[13]=8'h81; mem[14]=8'h11; mem[15]=8'h00; // ebreak x2, x3, 5   
-//mem[12]=8'h63; mem[13]=8'hc4; mem[14]=8'h20; mem[15]=8'h00;  // blt, x1, x2, equal  
-//mem[12]=8'h63; mem[13]=8'hd4; mem[14]=8'h20; mem[15]=8'h00;  // bge, x1, x2, equal  
-//mem[12]=8'h63; mem[13]=8'he4; mem[14]=8'h20; mem[15]=8'h00;  // bltu, x1, x2, equal 
-//mem[12]=8'h63; mem[13]=8'hf4; mem[14]=8'h20; mem[15]=8'h00;  // bgeu, x1, x2, equal   
-mem[16]=8'h93; mem[17]=8'h01; mem[18]=8'h10; mem[19]=8'h00; // addi x3, x0, 1
-          // equal: 
-mem[20]=8'h93; mem[21]=8'h09; mem[22]=8'h10; mem[23]=8'h00;  // addi x19, x0, 1 
-mem[24]=8'h6f; mem[25]=8'h02; mem[26]=8'hc0; mem[27]=8'h00;  // jal  x4, func         
-mem[28]=8'h93; mem[29]=8'h82; mem[30]=8'h12; mem[31]=8'h00;  // addi x5, x5, 1                
-mem[32]=8'h6f; mem[33]=8'h00; mem[34]=8'hc0; mem[35]=8'h00;  // jal  x0, end                   
-            // func:
-mem[36]=8'h93; mem[37]=8'h02; mem[38]=8'h90; mem[39]=8'h00;  // addi x5, x0, 9 
-mem[40]=8'h67; mem[41]=8'h00; mem[42]=8'h02; mem[43]=8'h00; //  jalr x0, x4, 0  
-            // end:         
-mem[44]=8'h63; mem[45]=8'h00; mem[46]=8'h00; mem[47]=8'h00;   // beq  x0, x0, end            
-
-    end
-
-endmodule

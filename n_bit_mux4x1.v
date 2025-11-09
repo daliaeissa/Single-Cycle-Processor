@@ -25,8 +25,8 @@ module n_bit_mux4x1 #(parameter N = 32)
 always @(*) begin
     case (select)
         2'b00: out = a; // PC + 4
-        2'b10: out = b; // Branch target address
-        2'b01: out = c; // JAL/JALR target address
+        2'b10: out = b; // Branch target address and JAL 
+        2'b01: out = c; // JALR target address
         2'b11: out = d; // Halt (feeding pc current pc, so stays in same instruction and doesn't go on to the next one)
     endcase
 end

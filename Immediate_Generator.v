@@ -84,7 +84,7 @@ always @(*) begin
 
             case (inst[14:12])
                 3'b001, 3'b101: begin // SLLI, SRLI, SRAI
-                    
+                    gen_out = {{20{1'b0}}, immediate[11:0]};
                 end
                 3'b011: begin // SLTIU
                     gen_out = {{20{1'b0}}, immediate[11:0]}; // Zero extend for unsigned comparison

@@ -183,8 +183,8 @@ assign PCSrc = {branch_select, PCSelect};
 
 n_bit_mux4x1 pc_mux (
     .a(pc_plus_4),
-    .b(branch_target_address),
-    .c(alu_result),        // JAL/JALR target address
+    .b(branch_target_address), // Add JAL here 
+    .c(alu_result),        // JAL/JALR target address // make JALR target address here ALU result
     .d(pc_current),        // Halt
     .select(PCSrc),         // need to change to pc_select to add the lui, auipc, jal, jalr later
     .out(pc_next)
@@ -216,6 +216,8 @@ Branch_Control_Unit branch_control_unit (
     .overflow_flag(overflow_flag),
     .sign_flag(sign_flag),
     .Branch(Branch),
+    .funct3(instruction[14:12]),
+    .opcode(instruction[6:0]),
     .take_branch(take_branch)
 );
 

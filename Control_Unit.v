@@ -101,14 +101,14 @@ always @(*) begin
             PCSelect = 0;
         end
         5'b11011: begin     // JAL
-            Branch = 0;
+            Branch = 1;
             MemRead = 0;
             MemtoReg = 3'b100;
             ALUOp = 2'b11;
             MemWrite = 0;
             ALUSrc = 1;
             RegWrite = 1;
-            PCSelect = 1;
+            PCSelect = 0;
         end
         5'b11001: begin     // JALR
             Branch = 0;
@@ -121,24 +121,24 @@ always @(*) begin
             PCSelect = 1;
         end
         5'b00011: begin     // FENCE, FENCE.TSO, PAUSE
-            Branch = 0;
+            Branch = 1;
             MemRead = 0;
             MemtoReg = 3'bXXX;
             ALUOp = 2'b11;
             MemWrite = 0;
             ALUSrc = 0;
             RegWrite = 0;
-            PCSelect = 0;
+            PCSelect = 1;
         end
         5'b11100: begin     // ECALL, EBREAK
-            Branch = 0;
+            Branch = 1;
             MemRead = 0;
             MemtoReg = 3'bXXX;
             ALUOp = 2'b11;
             MemWrite = 0;
             ALUSrc = 0;
             RegWrite = 0;
-            PCSelect = 0;
+            PCSelect = 1;
         end
     endcase
 end
